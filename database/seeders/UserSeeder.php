@@ -18,8 +18,10 @@ class UserSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'test@example.com'], // Kondisi unik
             [
+                'id' => 'AD-12000',
                 'name' => 'Test User',
                 'password' => Hash::make('qwerty123'),
+                'role' => 1,
                 'email_verified_at' => now(),
             ]
         );
