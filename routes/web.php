@@ -4,9 +4,20 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('guest.guest');
 });
 
+Route::get('/admin', function () {
+    return view('admin.admin');
+});
+
+Route::get('/member', function() {
+    return view('member.member');
+});
+
+Route::get('/event', function(){
+    return view('event.event');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -18,9 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/event', function(){
-    return view('event.event');
-});
 
 use App\Http\Controllers\AuthController;
 

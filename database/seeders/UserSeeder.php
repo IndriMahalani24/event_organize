@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\User;
+use App\Models\Users;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;    
 
@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'test@example.com'], // Kondisi unik
             [
-                'id' => 'AD-12000',
+                'id' => 'AD12000',
                 'name' => 'Test User',
                 'password' => Hash::make('qwerty123'),
                 'role' => 1,
