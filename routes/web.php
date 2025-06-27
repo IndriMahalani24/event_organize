@@ -27,27 +27,28 @@ require __DIR__ . '/auth.php';
 | Redirect Root "/" Berdasarkan Role
 |--------------------------------------------------------------------------
 */
-// Route::get('/', function () {
-//     if (!Auth::check()) {
-//         return redirect('/login');
-//     }
-
-//     $user = Auth::user();
-
-//     switch ($user->role->id) {
-//         case 1:
-//             return redirect()->route('adminList');
-//         case 2:
-//         case 3:
-//         case 4:
-//             return redirect()->route('event.event');
-//         default:
-//             abort(403, 'Role tidak dikenali.');
-//     }
-// })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/', function () {
-    return redirect()->route('event.event');
-});
+    if (!Auth::check()) {
+        return redirect('/login');
+    }
+
+    $user = Auth::user();
+
+    switch ($user->role->id) {
+        case 1:
+            return redirect()->route('adminList');
+        case 2:
+        case 3:
+        case 4:
+            return redirect()->route('event.event');
+        default:
+            abort(403, 'Role tidak dikenali.');
+    }
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::get('/', function () {
+//     return redirect()->route('event.event');
+// });
 
 Route::get('/event', function () {
             return view('event.event');
@@ -73,7 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     | Admin Routes (role_id = 1)
     |-------------------------------
     */
-    Route::middleware(['Role:1'])->prefix('adm')->group(function () {
+    Route::middleware(['role:1'])->prefix('adm')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('adminList');
         Route::get('/create', [AdminController::class, 'create'])->name('adminCreate');
         Route::post('/create', [AdminController::class, 'store'])->name('adminStore');
@@ -84,9 +85,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     | Event Routes (role_id = 2-4)
     |-------------------------------
     */
-    // Route::middleware(['Role:2,3,4'])->group(function () {
-    //     Route::get('/event', function () {
-    //         return view('event.event');
-    //     })->name('event.event');
-    // });
+    Route::middleware(['role:2,3,4'])->group(function () {
+        Route::get('/event', function () {
+            return view('event.event');
+        })->name('event.event');
+    });
 });

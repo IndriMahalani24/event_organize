@@ -1,4 +1,4 @@
-const Panitia = require('../models/Panitia');
+const Panitia = require('../model/panitia');
 
 const index = (req, res) => {
     const panitia = new Panitia();
