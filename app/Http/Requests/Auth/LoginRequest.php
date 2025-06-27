@@ -12,7 +12,8 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Apakah request ini diizinkan?
+     * Karena ini form login, selalu izinkan.
      */
     public function authorize(): bool
     {
@@ -20,9 +21,7 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * Aturan validasi form login.
      */
     public function rules(): array
     {
@@ -33,29 +32,32 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Attempt to authenticate the request's credentials.
+     * Coba autentikasi user dengan kredensial dari form.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException jika gagal login
      */
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
+        // Coba login dengan email dan password
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            // Jika gagal, tambahkan hit ke rate limiter
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => trans('auth.failed'), // "Email atau password salah"
             ]);
         }
 
+        // Jika berhasil login, bersihkan rate limit
         RateLimiter::clear($this->throttleKey());
     }
 
     /**
-     * Ensure the login request is not rate limited.
+     * Pastikan user tidak kena rate limit (brute force protection).
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException jika terlalu banyak percobaan
      */
     public function ensureIsNotRateLimited(): void
     {
@@ -76,10 +78,11 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the rate limiting throttle key for the request.
+     * Kunci identifikasi untuk rate limiter.
+     * Kombinasi email + IP address user.
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }

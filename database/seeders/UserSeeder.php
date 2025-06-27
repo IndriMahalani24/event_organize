@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Users;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;    
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -14,16 +14,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ini akan membuat user jika belum ada
-        User::firstOrCreate(
-            ['email' => 'test@example.com'], // Kondisi unik
-            [
-                'id' => 'AD12000',
-                'name' => 'Test User',
-                'password' => Hash::make('qwerty123'),
-                'role' => 1,
-                'email_verified_at' => now(),
-            ]
-        );
+        User::create([
+            'id' => 'ADM001',
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 1,
+            'role_id' => 1
+        ]);
     }
 }

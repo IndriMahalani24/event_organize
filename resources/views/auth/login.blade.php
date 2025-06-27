@@ -12,7 +12,7 @@
             @if ($errors->any())
                 <div class="alert alert-danger">{{ $errors->first() }}</div>
             @endif
-            <form method="POST" action="{{ url('/login') }}">
+            <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="mb-3">
                     <label>Email</label>

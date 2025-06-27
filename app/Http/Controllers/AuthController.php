@@ -9,24 +9,44 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('login'); // sesuai dengan login.blade.php
+        return view('login');
     }
 
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
+    use Illuminate\Support\Facades\Auth;
 
-        if (Auth::attempt($credentials)) {
-            // Login berhasil
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+public function login(LoginRequest $request)
+{
+    $credentials = $request->only('email', 'password');
+
+    // Debug awal
+    dd($credentials);
+
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        $user = Auth::user();
+        dd('Login berhasil', $user);
+
+        switch ($user->role_id) {
+            case 1:
+                return redirect()->route('admin.index');
+            case 2:
+                return redirect()->route('panitia.index');
+            case 3:
+                return redirect()->route('keuangan.index');
+            case 4:
+                return redirect()->route('member.index');
+            default:
+                return redirect('/');
         }
-
-        // Gagal login
-        return back()->withErrors([
-            'email' => 'These credentials do not match our records.',
-        ])->onlyInput('email');
     }
+
+    return back()->withErrors([
+        'email' => 'These credentials do not match our records.',
+    ])->onlyInput('email');
+}
+
+
 
     public function logout(Request $request)
     {
