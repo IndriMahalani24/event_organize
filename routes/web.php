@@ -5,15 +5,45 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GuestController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\QrController;
+use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\RegistrationController;
+
+
+// Guest & Member
+Route::get('/', [GuestController::class, 'landing'])->name('landing');
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+
+// Member only
+Route::middleware(['auth', 'role:member'])->group(function () {
+    Route::get('/events/{id}/order', [RegistrationController::class, 'order'])->name('events.order');
+    Route::post('/events/{id}/order', [RegistrationController::class, 'store'])->name('events.store');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/registrations/{id}/upload', [RegistrationController::class, 'showUploadForm'])->name('registrations.upload');
+    Route::post('/registrations/{id}/upload', [RegistrationController::class, 'uploadProof'])->name('registrations.upload.submit');
+});
+
+Route::middleware(['auth', 'role:keuangan'])->prefix('keuangan')->group(function () {
+    Route::get('/registrasi', [FinanceController::class, 'index'])->name('finance.index');
+    Route::post('/registrasi/{id}/approve', [FinanceController::class, 'approve'])->name('finance.approve');
+});
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 
 /*
 |--------------------------------------------------------------------------
 | Guest Route (Tidak login)
 |--------------------------------------------------------------------------
 */
-Route::get('/guest', function () {
-    return view('guest.guest');
-})->name('guest');
+// Route::get('/guest', function () {
+//     return view('guest.guest');
+// })->name('guest');
 
 /*
 |--------------------------------------------------------------------------
@@ -27,32 +57,66 @@ require __DIR__ . '/auth.php';
 | Redirect Root "/" Berdasarkan Role
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    if (!Auth::check()) {
-        return redirect('/login');
-    }
+// Route::get('/',[EventController::class, 'index']) -> name('event.index');
 
-    $user = Auth::user();
+// Route::get('events/{id}', [EventController::class, 'show'])->name('events.show');
 
-    switch ($user->role->id) {
-        case 1:
-            return redirect()->route('adminList');
-        case 2:
-        case 3:
-        case 4:
-            return redirect()->route('event.event');
-        default:
-            abort(403, 'Role tidak dikenali.');
-    }
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
+Route::middleware(['auth'])->get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
+
+Route::middleware(['auth'])->get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+
+// Route::middleware(['auth'])->post('/events/{id}/register', [EventController::class, 'register'])->name('events.register');
+
+Route::middleware(['auth'])->get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
+
+// Route::middleware(['auth'])->get('/registrations/{id}/upload', [RegistrationController::class, 'showUploadForm'])->name('registrations.upload');
+// Route::middleware(['auth'])->post('/registrations/{id}/upload', [RegistrationController::class, 'uploadProof'])->name('registrations.upload.submit');
+
+Route::middleware(['auth', 'role:keuangan'])->group(function () {
+    Route::get('/keuangan/registrasi', [FinanceController::class, 'index'])->name('finance.index');
+});
+
+
+
+// Route::middleware(['auth', 'role:keuangan'])->prefix('keuangan')->group(function () {
+//     Route::get('/registrasi', [FinanceController::class, 'index'])->name('finance.index');
+//     Route::post('/registrasi/{id}/approve', [FinanceController::class, 'approve'])->name('finance.approve');
+// });
+
+Route::get('/event', [EventController::class, 'index']);
+
+
+
+Route::get('/dashboard', function () {
+    return redirect()->route('landing');
+})->name('dashboard');
+// Route::get('/', function () {
+//     if (!Auth::check()) {
+//         return redirect('/event');
+//     }
+
+//     $user = Auth::user();
+
+//     switch ($user->role->id) {
+//         case 1:
+//             return redirect()->route('adminList');
+//         case 2:
+//         case 3:
+//         case 4:
+//             return redirect()->route('event.event');
+//         default:
+//             abort(403, 'Role tidak dikenali.');
+//     }
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/', function () {
 //     return redirect()->route('event.event');
 // });
 
-Route::get('/event', function () {
-            return view('event.event');
-        })->name('event.event');
+// Route::get('/event', function () {
+//             return view('event.event');
+//         })->name('event.event');
 /*
 |--------------------------------------------------------------------------
 | Protected Routes (Butuh Login)

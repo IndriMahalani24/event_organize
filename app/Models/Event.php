@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
 {
@@ -17,21 +18,62 @@ class Event extends Model
         'title',
         'description',
         'location',
-        'max_participants',
-        'status',
-        'speaker',
-        'event_time',
         'event_date',
-        'users_iduser'
+        'start_time',
+        'end_time',
+        'price',
+        'ticket_quota',
+        'status',
+        'image_path',
+        'cretaed_at',
+        'updated_at',
     ];
 
-    public function penanggungJawab()
+    protected $casts = [
+        'event_date' => 'date',
+        'end_time' => 'datetime', // Menggunakan datetime agar bisa format time saja
+    ];
+
+    // Relasi: Event dimiliki oleh satu Kategori
+    public function category()
     {
-        return $this->belongsTo(User::class, 'users_iduser', 'id');
+        return $this->belongsTo(Category::class, 'event_category');
     }
 
+    // Relasi: Satu event memiliki banyak pendaftaran
     public function registrations()
     {
-        return $this->hasMany(Registration::class, 'event_id', 'id');
+        return $this->hasMany(Registration::class);
+    }
+    /**
+     * Get the number of registrations for this event.
+     */
+    public function getRegistrationCountAttribute()
+    {
+        return $this->registrations()->count();
+    }
+
+    /**
+     * Check if event has reached maximum participants.
+     */
+    public function getIsFullAttribute()
+    {
+        return $this->registration_count >= $this->max_participants;
+    }
+
+    /**
+     * Check if an event is upcoming.
+     */
+    public function getIsUpcomingAttribute()
+    {
+        return $this->event_date->isFuture();
+    }
+
+    /**
+     * Get formatted registration fee.
+     */
+    public function getFormattedFeeAttribute()
+    {
+        return 'Rp ' . number_format($this->registration_fee, 0, ',', '.');
     }
 }

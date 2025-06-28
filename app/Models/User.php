@@ -11,22 +11,26 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'user';
+    protected $table = 'users';
 
     // Tipe data primary key kamu adalah string
     // protected $keyType = 'string';
 
     // Karena bukan auto-increment
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'name', 'email', 'password', 'role_id'
+        'id', 'name', 'email', 'password', 'role'
     ];
 
     protected $hidden = [
         'password', 
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
 
     protected function casts(): array

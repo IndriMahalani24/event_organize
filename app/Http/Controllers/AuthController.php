@@ -14,39 +14,35 @@ class AuthController extends Controller
 
     use Illuminate\Support\Facades\Auth;
 
-public function login(LoginRequest $request)
-{
-    $credentials = $request->only('email', 'password');
+    public function login(LoginRequest $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-    // Debug awal
-    dd($credentials);
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();        
 
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
+            $user = Auth::user();
+            dd('Berhasil login', $user);
 
-        $user = Auth::user();
-        dd('Login berhasil', $user);
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->route('adminList');
+                case 'panitia':
+                    return redirect()->route('event.event'); // atau route panitia
+                case 'keuangan':
+                    return redirect()->route('finance.index');
+                case 'member':
+                    return redirect()->route('landing');
+                default:
+                    abort(403, 'Role tidak dikenali.');
+            }
 
-        switch ($user->role_id) {
-            case 1:
-                return redirect()->route('admin.index');
-            case 2:
-                return redirect()->route('panitia.index');
-            case 3:
-                return redirect()->route('keuangan.index');
-            case 4:
-                return redirect()->route('member.index');
-            default:
-                return redirect('/');
         }
+
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ]);
     }
-
-    return back()->withErrors([
-        'email' => 'These credentials do not match our records.',
-    ])->onlyInput('email');
-}
-
-
 
     public function logout(Request $request)
     {
