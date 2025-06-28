@@ -8,16 +8,12 @@ use Illuminate\Support\Facades\Http;
 class AdminController extends Controller
 {
     public function index()
-{
-    $response = Http::get('http://localhost:3000/panitia');
-    
-    if ($response->successful()) {
-        $panitia = $response->json();
-        return view('admin.index', compact('panitia'));
-    } else {
-        return back()->withErrors('Gagal mengambil data panitia');
+    {
+        $eventPanitia = Http::get('http://localhost:3000/panitia/event')->json();
+        $keuanganPanitia = Http::get('http://localhost:3000/panitia/keuangan')->json();
+        // dd($eventPanitia);
+        return view('admin.admin', compact('eventPanitia', 'keuanganPanitia'));
     }
-}
 
 
     public function create()    
@@ -31,8 +27,10 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'divisi' => $request->divisi
+            'divisi' => $request->divisi,
+            'role_id' => $request->role_id
         ]);
+        // dd($response->json());
 
         if ($response->successful()) {
             return redirect()->route('adminList')->with('success', 'Panitia berhasil ditambahkan!');
@@ -42,12 +40,25 @@ class AdminController extends Controller
     }
 
 
+    public function edit($id)
+    {
+        $response = Http::get("http://localhost:3000/panitia/{$id}");
+        $panitia = $response->json();
+
+        if (!$panitia) {
+            abort(404, 'Panitia tidak ditemukan');
+        }
+
+        return view('admin.edit', compact('panitia'));
+    }
+
+
     public function update(Request $request, $id)
     {
         $response = Http::put("http://localhost:3000/panitia/$id", [
             'name' => $request->name,
-            'email' => $request->email,
-            'divisi' => $request->divisi
+            'divisi' => $request->divisi,
+            'password' => $request->password,
         ]);
 
         if ($response->successful()) {

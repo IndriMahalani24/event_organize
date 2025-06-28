@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+<<<<<<< Updated upstream
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\QrController;
@@ -35,6 +36,9 @@ Route::middleware(['auth', 'role:keuangan'])->prefix('keuangan')->group(function
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+=======
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+>>>>>>> Stashed changes
 
 /*
 |--------------------------------------------------------------------------
@@ -54,12 +58,21 @@ require __DIR__ . '/auth.php';
 
 /*
 |--------------------------------------------------------------------------
-| Redirect Root "/" Berdasarkan Role
+| Redirect Root "/login" Berdasarkan Role
 |--------------------------------------------------------------------------
 */
+<<<<<<< Updated upstream
 // Route::get('/',[EventController::class, 'index']) -> name('event.index');
 
 // Route::get('events/{id}', [EventController::class, 'show'])->name('events.show');
+=======
+// Route untuk halaman login (default)
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+// Route dashboard setelah login
+Route::get('/dashboard', function () {
+    $user = Auth::user();
+>>>>>>> Stashed changes
 
 Route::get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
 Route::middleware(['auth'])->get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
@@ -110,13 +123,16 @@ Route::get('/dashboard', function () {
 //     }
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::get('/', function () {
-//     return redirect()->route('event.event');
-// });
 
+<<<<<<< Updated upstream
 // Route::get('/event', function () {
 //             return view('event.event');
 //         })->name('event.event');
+=======
+Route::get('/', function () {
+            return view('event.event');
+        })->name('event.event');
+>>>>>>> Stashed changes
 /*
 |--------------------------------------------------------------------------
 | Protected Routes (Butuh Login)
@@ -142,6 +158,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('adminList');
         Route::get('/create', [AdminController::class, 'create'])->name('adminCreate');
         Route::post('/create', [AdminController::class, 'store'])->name('adminStore');
+        Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('adminEdit');
+        Route::put('/edit/{id}', [AdminController::class, 'update'])->name('adminUpdate');
+        Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('adminDestroy');
     });
 
     /*

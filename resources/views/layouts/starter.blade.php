@@ -2,12 +2,15 @@
 
 @section('content')
 
-<!-- cards -->
+<main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+        
+
+        <!-- cards   -->
       <div class="w-full px-6 py-6 mx-auto">
-        <!-- row 1 -->
-        <div class="flex flex-wrap -mx-3">
-          <!-- card1 -->
-          <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+          <!-- row 1   -->
+          <div class="flex flex-wrap -mx-3">
+            <!-- card1   -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
             <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
               <div class="flex-auto p-4">
                 <div class="flex flex-row -mx-3">
@@ -31,8 +34,8 @@
             </div>
           </div>
 
-          <!-- card2 -->
-          <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+            <!-- card2   -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
             <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
               <div class="flex-auto p-4">
                 <div class="flex flex-row -mx-3">
@@ -56,8 +59,8 @@
             </div>
           </div>
 
-          <!-- card3 -->
-          <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+            <!-- card3   -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
             <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
               <div class="flex-auto p-4">
                 <div class="flex flex-row -mx-3">
@@ -81,8 +84,8 @@
             </div>
           </div>
 
-          <!-- card4 -->
-          <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
+            <!-- card4   -->
+            <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
             <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
               <div class="flex-auto p-4">
                 <div class="flex flex-row -mx-3">
@@ -105,9 +108,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> 
 
-        <!-- cards row 2 -->
+          cards row 2  
         <div class="flex flex-wrap mt-6 -mx-3">
           <div class="w-full max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
             <div class="border-black/12.5 dark:bg-slate-850 dark:shadow-dark-xl shadow-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
@@ -128,7 +131,7 @@
 
           <div class="w-full max-w-full px-3 lg:w-5/12 lg:flex-none">
             <div slider class="relative w-full h-full overflow-hidden rounded-2xl">
-              <!-- slide 1 -->
+                slide 1  
               <div slide class="absolute w-full h-full transition-all duration-500">
                 <img class="object-cover h-full" src="./assets/img/carousel-1.jpg" alt="carousel image" />
                 <div class="block text-start ml-12 left-0 bottom-0 absolute right-[15%] pt-5 pb-5 text-white">
@@ -140,7 +143,7 @@
                 </div>
               </div>
 
-              <!-- slide 2 -->
+                slide 2  
               <div slide class="absolute w-full h-full transition-all duration-500">
                 <img class="object-cover h-full" src="{{asset('./assets/img/carousel-2.jpg')}}" alt="carousel image" />
                 <div class="block text-start ml-12 left-0 bottom-0 absolute right-[15%] pt-5 pb-5 text-white">
@@ -152,7 +155,7 @@
                 </div>
               </div>
 
-              <!-- slide 3 -->
+                slide 3  
               <div slide class="absolute w-full h-full transition-all duration-500">
                 <img class="object-cover h-full" src="{{asset('./assets/img/carousel-3.jpg')}}" alt="carousel image" />
                 <div class="block text-start ml-12 left-0 bottom-0 absolute right-[15%] pt-5 pb-5 text-white">
@@ -164,14 +167,14 @@
                 </div>
               </div>
 
-              <!-- Control buttons -->
+                Control buttons  
               <button btn-next class="absolute z-10 w-10 h-10 p-2 text-lg text-white border-none opacity-50 cursor-pointer hover:opacity-100 far fa-chevron-right active:scale-110 top-6 right-4"></button>
               <button btn-prev class="absolute z-10 w-10 h-10 p-2 text-lg text-white border-none opacity-50 cursor-pointer hover:opacity-100 far fa-chevron-left active:scale-110 top-6 right-16"></button>
             </div>
           </div>
         </div>
 
-        <!-- cards row 3 -->
+          cards row 3  
 
         <div class="flex flex-wrap mt-6 -mx-3">
           <div class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-7/12 lg:flex-none">
@@ -188,7 +191,7 @@
                       <td class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40">
                         <div class="flex items-center px-2 py-1">
                           <div>
-                            <img src="{{asset('./assets/img/icons/flags/US.png')}}" alt="Country flag" />
+                            <img src="{{asset(./assets/img/icons/flags/US.png)}}" alt="Country flag" />
                           </div>
                           <div class="ml-6">
                             <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Country:</p>
@@ -416,7 +419,7 @@
           </div>
         </footer>
       </div>
-      <!-- end cards -->
+        end cards  
     </main>
 
 @endsection

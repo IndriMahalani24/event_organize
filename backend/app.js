@@ -15,6 +15,9 @@ app.get('/', (req, res) => {
 
 // Route Panitia
 app.use('/panitia', panitiaRoutes);
+// Route Event
+const eventRoutes = require('./routes/eventRoutes');
+app.use('/event', eventRoutes);
 
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');

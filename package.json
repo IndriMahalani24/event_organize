@@ -17,8 +17,12 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
+<<<<<<< Updated upstream
         "cors": "^2.8.5",
         "express": "^5.1.0",
         "qrcode": "^1.5.4"
+=======
+        "bcrypt": "^6.0.0"
+>>>>>>> Stashed changes
     }
 }
