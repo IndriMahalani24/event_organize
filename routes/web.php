@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\QrController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 
 // Guest & Member
@@ -34,112 +34,53 @@ Route::middleware(['auth', 'role:keuangan'])->prefix('keuangan')->group(function
     Route::post('/registrasi/{id}/approve', [FinanceController::class, 'approve'])->name('finance.approve');
 });
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-=======
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
->>>>>>> Stashed changes
-
-/*
-|--------------------------------------------------------------------------
-| Guest Route (Tidak login)
-|--------------------------------------------------------------------------
-*/
-// Route::get('/guest', function () {
-//     return view('guest.guest');
-// })->name('guest');
-
-/*
-|--------------------------------------------------------------------------
-| Auth Routes (Breeze)
-|--------------------------------------------------------------------------
-*/
-require __DIR__ . '/auth.php';
-
-/*
-|--------------------------------------------------------------------------
-| Redirect Root "/login" Berdasarkan Role
-|--------------------------------------------------------------------------
-*/
-<<<<<<< Updated upstream
-// Route::get('/',[EventController::class, 'index']) -> name('event.index');
-
-// Route::get('events/{id}', [EventController::class, 'show'])->name('events.show');
-=======
-// Route untuk halaman login (default)
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-
-// Route dashboard setelah login
-Route::get('/dashboard', function () {
-    $user = Auth::user();
->>>>>>> Stashed changes
-
-Route::get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
 Route::middleware(['auth'])->get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
 
 Route::middleware(['auth'])->get('/events/{id}', [EventController::class, 'show'])->name('events.show');
-
-// Route::middleware(['auth'])->post('/events/{id}/register', [EventController::class, 'register'])->name('events.register');
-
-Route::middleware(['auth'])->get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
-
-// Route::middleware(['auth'])->get('/registrations/{id}/upload', [RegistrationController::class, 'showUploadForm'])->name('registrations.upload');
-// Route::middleware(['auth'])->post('/registrations/{id}/upload', [RegistrationController::class, 'uploadProof'])->name('registrations.upload.submit');
 
 Route::middleware(['auth', 'role:keuangan'])->group(function () {
     Route::get('/keuangan/registrasi', [FinanceController::class, 'index'])->name('finance.index');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Root
+|--------------------------------------------------------------------------
+*/
 
+// Route::get('/dashboard', function () {
+//     return redirect()->route('landing');
+// })->name('dashboard');
 
-// Route::middleware(['auth', 'role:keuangan'])->prefix('keuangan')->group(function () {
-//     Route::get('/registrasi', [FinanceController::class, 'index'])->name('finance.index');
-//     Route::post('/registrasi/{id}/approve', [FinanceController::class, 'approve'])->name('finance.approve');
-// });
-
-Route::get('/event', [EventController::class, 'index']);
-
-
+/*
+|--------------------------------------------------------------------------
+| Login
+|--------------------------------------------------------------------------
+*/
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 Route::get('/dashboard', function () {
-    return redirect()->route('landing');
-})->name('dashboard');
-// Route::get('/', function () {
-//     if (!Auth::check()) {
-//         return redirect('/event');
-//     }
-
-//     $user = Auth::user();
-
-//     switch ($user->role->id) {
-//         case 1:
-//             return redirect()->route('adminList');
-//         case 2:
-//         case 3:
-//         case 4:
-//             return redirect()->route('event.event');
-//         default:
-//             abort(403, 'Role tidak dikenali.');
-//     }
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-
-<<<<<<< Updated upstream
-// Route::get('/event', function () {
-//             return view('event.event');
-//         })->name('event.event');
-=======
-Route::get('/', function () {
-            return view('event.event');
-        })->name('event.event');
->>>>>>> Stashed changes
+    $user = Auth::user();
+    switch ($user->role->id) {
+        case 1:
+            return redirect()->route('adminList');
+        case 2:
+            return redirect()->route('events.event');
+        case 3:
+            return redirect()->route('events.event');
+        case 4:
+            return redirect()->route('events.event');
+        default:
+            abort(403, 'Role tidak dikenali.');
+    }
+})->middleware(['auth', 'verified'])->name('dashboard');
 /*
 |--------------------------------------------------------------------------
 | Protected Routes (Butuh Login)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified'])->group(function () {
-
     /*
     |-------------------------------
     | Profile Routes
@@ -154,7 +95,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     | Admin Routes (role_id = 1)
     |-------------------------------
     */
-    Route::middleware(['role:1'])->prefix('adm')->group(function () {
+    Route::middleware(['rolee:1'])->prefix('adm')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('adminList');
         Route::get('/create', [AdminController::class, 'create'])->name('adminCreate');
         Route::post('/create', [AdminController::class, 'store'])->name('adminStore');
@@ -163,14 +104,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('adminDestroy');
     });
 
-    /*
+      /*
     |-------------------------------
-    | Event Routes (role_id = 2-4)
+    | Admin Routes (role_id = 2)
     |-------------------------------
     */
-    Route::middleware(['role:2,3,4'])->group(function () {
-        Route::get('/event', function () {
-            return view('event.event');
-        })->name('event.event');
+
+    Route::middleware(['auth', 'rolee:2'])->prefix('panitia')->group(function () {
+        Route::get('/event', [PanitiaController::class, 'index'])->name('panitia.event.index');
+        Route::get('/event/create', [PanitiaController::class, 'create'])->name('panitia.event.create');
+        Route::post('/event', [PanitiaController::class, 'store'])->name('panitia.event.store');
+        Route::get('/event/edit/{id}', [PanitiaController::class, 'edit'])->name('panitia.event.edit');
+        Route::put('/event/update/{id}', [PanitiaController::class, 'update'])->name('panitia.event.update');
+    });
+
+    /*
+    |-------------------------------
+    | Event Routes (role_id = 4)
+    |-------------------------------
+    */
+    Route::middleware(['rolee:2,3,4'])->group(function () {
+        Route::get('/events', [EventController::class, 'index'])->name('events.event');
     });
 });
+
+require __DIR__ . '/auth.php';

@@ -24,5 +24,23 @@ const getByUser = (req, res) => {
     });
 };
 
+const update = (req, res) => {
+    const id = req.params.id;
+    const { title, description, location, max_participants, status, speaker, event_time, event_date } = req.body;
 
-module.exports = { index, store };
+    const sql = `
+        UPDATE event 
+        SET title = ?, description = ?, location = ?, max_participants = ?, status = ?, speaker = ?, event_time = ?, event_date = ?
+        WHERE id = ?
+    `;
+
+    db.query(sql, [
+        title, description, location, max_participants, status, speaker, event_time, event_date, id
+    ], (err, result) => {
+        if (err) return res.status(500).json({ error: err });
+        res.json({ message: 'Event berhasil diupdate', result });
+    });
+};
+
+
+module.exports = { index, store, getByUser, update };

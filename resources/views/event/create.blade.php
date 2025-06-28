@@ -12,42 +12,42 @@
         @csrf
         <div class="mb-4">
           <label for="name" class="block text-sm font-medium text-slate-700 dark:text-white">Nama Event</label>
-          <input type="text" name="name" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+          <input type="text" name="judul" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-slate-700 dark:text-white">Deskripsi</label>
-          <input type="email" name="email" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+          <input type="text" name="description" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4"> 
           <label for="password" class="block text-sm font-medium text-slate-700 dark:text-white">Lokasi</label>
-          <input type="password" name="password" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+          <input type="text" name="location" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4">
             <label for="divisi" class="block text-sm font-medium text-slate-700 dark:text-white">Max Peserta</label>
-            <input type="password" name="password" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+            <input type="number" name="max_participants" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4">
             <label for="divisi" class="block text-sm font-medium text-slate-700 dark:text-white">Status</label>
-            <input type="password" name="password" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+            <input type="text" name="status" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4">
             <label for="divisi" class="block text-sm font-medium text-slate-700 dark:text-white">Pembicara</label>
-            <input type="password" name="password" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+            <input type="text" name="speaker" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4">
             <label for="divisi" class="block text-sm font-medium text-slate-700 dark:text-white">Tanggal Event</label>
-            <input type="password" name="password" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+            <input type="date" name="event_date" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4">
             <label for="divisi" class="block text-sm font-medium text-slate-700 dark:text-white">Jam Event</label>
-            <input type="password" name="password" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+            <input type="time" name="event_time" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <input type="hidden" name="users_iduser" value="{{ Auth::user()->id }}">

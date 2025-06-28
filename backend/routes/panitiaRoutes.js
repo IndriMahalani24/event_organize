@@ -11,7 +11,6 @@ router.post('/', PanitiaController.store);
 // Ambil data panitia event dan panitia keuangan
 router.get('/event', PanitiaController.getEventPanitia);
 router.get('/keuangan', PanitiaController.getKeuanganPanitia);
-
 // Update data panitia
 router.put('/:id', PanitiaController.update);
 

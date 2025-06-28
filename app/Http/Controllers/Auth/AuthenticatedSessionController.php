@@ -26,8 +26,9 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         // Ambil hanya email dan password dari request
+        // dd($request->role());
         $credentials = $request->only('email', 'password');
-
+        // dd($credentials);
         // Coba lakukan login
         if (!Auth::attempt($credentials, $request->boolean('remember'))) {
             throw ValidationException::withMessages([
@@ -37,6 +38,7 @@ class AuthenticatedSessionController extends Controller
 
         // Login sukses: regenerasi session
         $request->session()->regenerate();
+        // dd(Auth::user());
 
         $user = Auth::user(); // Ambil user yang sedang login
 
@@ -46,13 +48,13 @@ class AuthenticatedSessionController extends Controller
         // Arahkan user ke halaman sesuai role
         switch ($roleId) {
             case 1:
-                return redirect()->route('adminList'); // Pastikan route ini ada
-
+                return redirect()->route('adminList');
             case 2:
+                return redirect()->route('events.event');
             case 3:
+                return redirect()->route('finance.index');
             case 4:
-                return redirect()->route('eventPage'); // Pastikan route ini juga ada
-
+                return redirect()->route('events.event');
             default:
                 // Role tidak dikenali: logout dan kembalikan ke login
                 Auth::logout();

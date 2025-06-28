@@ -4,6 +4,7 @@ const db = require('../db');
 
 const index = (req, res) => {
     const panitia = new Panitia();
+    res.send("Panitia route");
     panitia.all()
         .then((data) => res.json(data))
         .catch((err) => res.status(500).json({ error: err.message }));
@@ -42,7 +43,7 @@ const getEventPanitia = (req, res) => {
     SELECT u.id, u.name, u.email, p.divisi 
     FROM user u 
     JOIN panitia p ON u.id = p.users_id 
-    WHERE u.role_id = 2 AND p.divisi != 'keuangan'
+    WHERE u.role_id = 2 
   `;
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: err });
@@ -56,7 +57,7 @@ const getKeuanganPanitia = (req, res) => {
     SELECT u.id, u.name, u.email, p.divisi 
     FROM user u 
     JOIN panitia p ON u.id = p.users_id 
-    WHERE u.role_id = 2 AND p.divisi = 'keuangan'
+    WHERE u.role_id = 3
   `;
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: err });
@@ -150,4 +151,4 @@ const destroy = (req, res) => {
 
 
 module.exports = { index, store, getEventPanitia,
-  getKeuanganPanitia, update, getById, destroy };
+  getKeuanganPanitia, update, getById, destroy  };

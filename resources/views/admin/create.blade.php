@@ -40,7 +40,22 @@
             </select>
             </div>
 
-        <input type="hidden" name="role_id" value="2">
+        <input type="hidden" name="role_id" id="role_id" value="2">
+
+        <script>
+            document.getElementById('divisi').addEventListener('change', function () {
+                const selected = this.value;
+                const roleInput = document.getElementById('role_id');
+
+                if (selected === 'keuangan') {
+                    roleInput.value = 3;
+                } else {
+                    roleInput.value = 2;
+                }
+            });
+          </script>
+
+
         <div class="mt-6">
           <input type="submit" class="inline-block w-full px-6 py-3 mb-0 text-sm font-bold text-center text-white uppercase align-middle transition-all 
           bg-gradient-to-tr from-blue-600 to-blue-400 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.01] focus:outline-none">Simpan</input>

@@ -8,3 +8,5 @@ router.get('/myevents/:id', EventController.getByUser);
 
 
 module.exports = router;
+
+// 

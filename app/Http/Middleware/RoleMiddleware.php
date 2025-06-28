@@ -25,7 +25,7 @@ class RoleMiddleware
         }
 
         // Ambil role ID user yang sedang login (dari relasi 'role')
-        $userRoleId = Auth::user()->role->id ?? null;
+        $userRoleId = Auth::user()->role_id ?? null;
 
         // Ubah parameter roles jadi array, support format: role:1,2,3
         $allowedRoles = explode(',', $roles);

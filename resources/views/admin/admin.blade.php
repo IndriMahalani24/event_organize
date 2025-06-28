@@ -2,16 +2,13 @@
 
 @section('content')
 
-<<<<<<< Updated upstream
 
 <!-- Content -->
-=======
 <div class="w-full max-w-4xl px-3 mx-auto mt-6">
   <div class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl rounded-2xl bg-clip-border">
     <div class="border-black/12.5 rounded-t-2xl border-b p-6 pb-2">
       <h6 class="mb-0 text-xl font-bold dark:text-white">Insert Panitia</h6>
     </div>
->>>>>>> Stashed changes
 
     <div class="flex-auto px-6 py-4">
       <h3>Panitia Event</h3>

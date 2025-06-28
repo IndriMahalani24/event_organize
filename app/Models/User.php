@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'users';
+    protected $table = 'user';
 
     // Tipe data primary key kamu adalah string
     // protected $keyType = 'string';
