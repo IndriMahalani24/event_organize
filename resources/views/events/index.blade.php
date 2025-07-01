@@ -10,7 +10,8 @@
                 <h2 class="text-xl font-semibold">{{ $event->name }}</h2>
                 <p class="text-sm text-gray-600">{{ $event->event_date }}</p>
                 <a href="{{ route('events.show', $event->id) }}"
-                   class="text-blue-600 hover:underline block mt-2">Lihat Detail</a>
+                   class="bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700">Lihat Detail</a>
+                <img src="{{ asset('posters/' . $event->poster) }}" alt="Poster" class="h-24">
             </div>
         @endforeach
     </div>

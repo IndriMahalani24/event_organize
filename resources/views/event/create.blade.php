@@ -8,20 +8,20 @@
     </div>
 
     <div class="flex-auto px-6 py-4">
-      <form action="{{ route('eventStore') }}" method="POST">
+      <form action="{{ route('panitia.event.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
           <label for="name" class="block text-sm font-medium text-slate-700 dark:text-white">Nama Event</label>
-          <input type="text" name="judul" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+          <input type="text" name="name" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-slate-700 dark:text-white">Deskripsi</label>
+          <label for="description" class="block text-sm font-medium text-slate-700 dark:text-white">Deskripsi</label>
           <input type="text" name="description" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4"> 
-          <label for="password" class="block text-sm font-medium text-slate-700 dark:text-white">Lokasi</label>
+          <label for="location" class="block text-sm font-medium text-slate-700 dark:text-white">Lokasi</label>
           <input type="text" name="location" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
@@ -48,6 +48,16 @@
         <div class="mb-4">
             <label for="divisi" class="block text-sm font-medium text-slate-700 dark:text-white">Jam Event</label>
             <input type="time" name="event_time" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="registration_fee">Biaya Pendaftaran</label>
+            <input type="number" name="registration_fee"  class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="poster">Poster</label>
+            <input type="file" name="poster" class="form-input" accept="image/*" required>
         </div>
 
         <input type="hidden" name="users_iduser" value="{{ Auth::user()->id }}">

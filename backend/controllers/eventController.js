@@ -8,9 +8,9 @@ const index = (req, res) => {
 };
 
 const store = (req, res) => {
-    const { title, description, location, max_participants, status, speaker, event_time, event_date, users_iduser } = req.body;
+    const { name, description, location, max_participants, status, speaker, event_time, event_date, registration_fee, users_iduser } = req.body;
 
-    event.create({ title, description, location, max_participants, status, speaker, event_time, event_date, users_iduser })
+    event.create({ name, description, location, max_participants, status, speaker, event_time, event_date, registration_fee, users_iduser })
         .then(result => res.json({ message: 'Event berhasil ditambahkan', result }))
         .catch(err => res.status(500).json({ error: err.message }));
 };
@@ -26,16 +26,16 @@ const getByUser = (req, res) => {
 
 const update = (req, res) => {
     const id = req.params.id;
-    const { title, description, location, max_participants, status, speaker, event_time, event_date } = req.body;
+    const { name, description, location, max_participants, status, speaker, event_time, event_date,registration_fee  } = req.body;
 
     const sql = `
         UPDATE event 
-        SET title = ?, description = ?, location = ?, max_participants = ?, status = ?, speaker = ?, event_time = ?, event_date = ?
+        SET name = ?, description = ?, location = ?, max_participants = ?, status = ?, speaker = ?, event_time = ?, event_date = ?, registration_fee = ?
         WHERE id = ?
     `;
 
     db.query(sql, [
-        title, description, location, max_participants, status, speaker, event_time, event_date, id
+        name, description, location, max_participants, status, speaker, event_time, event_date, registration_fee, id
     ], (err, result) => {
         if (err) return res.status(500).json({ error: err });
         res.json({ message: 'Event berhasil diupdate', result });

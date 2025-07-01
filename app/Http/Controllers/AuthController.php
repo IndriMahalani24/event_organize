@@ -28,9 +28,9 @@ class AuthController extends Controller
                 case 'admin':
                     return redirect()->route('adminList');
                 case 'panitia':
-                    return redirect()->route('event.event'); // atau route panitia
+                    return redirect()->route('events.index'); // atau route panitia
                 case 'keuangan':
-                    return redirect()->route('finance.index');
+                    return redirect()->route('events.index');
                 case 'member':
                     return redirect()->route('landing');
                 default:

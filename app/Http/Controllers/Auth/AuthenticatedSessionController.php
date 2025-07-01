@@ -50,7 +50,7 @@ class AuthenticatedSessionController extends Controller
             case 1:
                 return redirect()->route('adminList');
             case 2:
-                return redirect()->route('events.event');
+                return redirect()->route('panitia.event.index');
             case 3:
                 return redirect()->route('finance.index');
             case 4:

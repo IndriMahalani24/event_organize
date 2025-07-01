@@ -1,12 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\user;
+use App\Models\panitia;
+use App\Models\event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
-class UserController extends Controller
+
+
+
+class PanitiaController extends Controller
 {
     public function index()
     {
@@ -14,29 +21,47 @@ class UserController extends Controller
         $response = Http::get("http://localhost:3000/event/user/{$userId}");
 
         $events = $response->json();
-        return view('panitia.event.index', compact('events'));
+        return view('event.index');
     }
 
     public function create()
     {
-        return view('panitia.event.create');
+        return view('event.create');
     }
 
     public function store(Request $request)
-    {
-        $userId = Auth::id();
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'poster' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
 
-        $data = $request->all();
-        $data['users_iduser'] = $userId;
+    $posterName = null;
+    if ($request->hasFile('poster')) {
+        $posterFile = $request->file('poster');
+        $posterName = Str::uuid() . '.' . $posterFile->getClientOriginalExtension();
+        $posterFile->move(public_path('posters'), $posterName);
+        // dd('Uploaded poster to: ' . public_path('posters/' . $posterName));
 
-        $response = Http::post("http://localhost:3000/event", $data);
-
-        if ($response->successful()) {
-            return redirect()->route('panitia.event.index')->with('success', 'Event berhasil ditambahkan!');
-        } else {
-            return back()->withErrors('Gagal menambahkan event.');
-        }
     }
+
+    event::create([
+        'name' => $request->name,
+        'description' => $request->description,
+        'event_date' => $request->event_date,
+        'event_time' => $request->event_time,
+        'location' => $request->location,
+        'speaker' => $request->speaker,
+        'poster' => $posterName,
+        'registration_fee' => $request->registration_fee,
+        'max_participants' => $request->max_participants,
+        'status' => $request->status,
+        'users_iduser' => auth()->user()->id
+    ]);
+
+    return redirect()->route('panitia.event.index')->with('success', 'Event berhasil dibuat');
+}
+
 
     public function edit($id)
     {

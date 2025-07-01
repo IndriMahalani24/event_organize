@@ -20,7 +20,7 @@
 
         <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Judul Event</label>
-            <input type="text" name="title" value="{{ $event['title'] }}" class="w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+            <input type="text" name="name" value="{{ $event['name'] }}" class="w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
         <div class="mb-4">
@@ -59,6 +59,20 @@
         <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Waktu</label>
             <input type="time" name="event_time" value="{{ $event['event_time'] }}" class="w-full mt-1 rounded border-gray-300 shadow-sm" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="registration_fee">Biaya Pendaftaran</label>
+            <input type="number" name="registration_fee" value="{{ $event['registration_fee'] }}" class="form-input">
+        </div>
+
+        <div class="mb-4">
+            <label for="poster">Poster Baru (Opsional)</label>
+            <input type="file" name="poster" class="form-input" accept="image/*">
+            @if ($event['poster'])
+                <p class="text-sm mt-2">Poster sekarang:</p>
+                <img src="{{ asset('posters/' . $event['poster']) }}" alt="Poster" class="h-24">
+            @endif
         </div>
 
         <div class="flex justify-end">

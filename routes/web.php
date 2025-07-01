@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\QrController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\PanitiaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 
@@ -29,18 +30,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/registrations/{id}/upload', [RegistrationController::class, 'uploadProof'])->name('registrations.upload.submit');
 });
 
-Route::middleware(['auth', 'role:keuangan'])->prefix('keuangan')->group(function () {
-    Route::get('/registrasi', [FinanceController::class, 'index'])->name('finance.index');
-    Route::post('/registrasi/{id}/approve', [FinanceController::class, 'approve'])->name('finance.approve');
-});
-
 Route::middleware(['auth'])->get('/registrations/{id}/qr', [QrController::class, 'show'])->name('registrations.qr');
 
 Route::middleware(['auth'])->get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 
-Route::middleware(['auth', 'role:keuangan'])->group(function () {
-    Route::get('/keuangan/registrasi', [FinanceController::class, 'index'])->name('finance.index');
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -66,11 +59,11 @@ Route::get('/dashboard', function () {
         case 1:
             return redirect()->route('adminList');
         case 2:
-            return redirect()->route('events.event');
+            return redirect()->route('panitia.event.index');
         case 3:
-            return redirect()->route('events.event');
+            return redirect()->route('events.index');   
         case 4:
-            return redirect()->route('events.event');
+            return redirect()->route('events.index');
         default:
             abort(403, 'Role tidak dikenali.');
     }
@@ -113,10 +106,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['auth', 'rolee:2'])->prefix('panitia')->group(function () {
         Route::get('/event', [PanitiaController::class, 'index'])->name('panitia.event.index');
         Route::get('/event/create', [PanitiaController::class, 'create'])->name('panitia.event.create');
-        Route::post('/event', [PanitiaController::class, 'store'])->name('panitia.event.store');
+        Route::post('/event/create', [PanitiaController::class, 'store'])->name('panitia.event.store');
         Route::get('/event/edit/{id}', [PanitiaController::class, 'edit'])->name('panitia.event.edit');
         Route::put('/event/update/{id}', [PanitiaController::class, 'update'])->name('panitia.event.update');
     });
+
+    Route::middleware(['auth', 'rolee:3'])->prefix('panitia')->group(function () {
+        Route::get('/registrasi', [FinanceController::class, 'index'])->name('finance.index');
+        Route::post('/registrasi/{id}/approve', [FinanceController::class, 'approve'])->name('finance.approve');
+    });
+
 
     /*
     |-------------------------------
@@ -124,7 +123,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     |-------------------------------
     */
     Route::middleware(['rolee:2,3,4'])->group(function () {
-        Route::get('/events', [EventController::class, 'index'])->name('events.event');
+        Route::get('/events', [EventController::class, 'index'])->name('events.index');
     });
 });
 
