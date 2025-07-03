@@ -16,14 +16,6 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 // Guest & Member
 Route::get('/', [GuestController::class, 'landing'])->name('landing');
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
-
-// Member only
-Route::middleware(['auth', 'role:member'])->group(function () {
-    Route::get('/events/{id}/order', [RegistrationController::class, 'order'])->name('events.order');
-    Route::post('/events/{id}/order', [RegistrationController::class, 'store'])->name('events.store');
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/registrations/{id}/upload', [RegistrationController::class, 'showUploadForm'])->name('registrations.upload');
@@ -34,16 +26,11 @@ Route::middleware(['auth'])->get('/registrations/{id}/qr', [QrController::class,
 
 Route::middleware(['auth'])->get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 
-
 /*
 |--------------------------------------------------------------------------
 | Root
 |--------------------------------------------------------------------------
 */
-
-// Route::get('/dashboard', function () {
-//     return redirect()->route('landing');
-// })->name('dashboard');
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +46,9 @@ Route::get('/dashboard', function () {
         case 1:
             return redirect()->route('adminList');
         case 2:
-            return redirect()->route('panitia.event.index');
+            return redirect()->route('landing');
         case 3:
-            return redirect()->route('events.index');   
+            return redirect()->route('landing');   
         case 4:
             return redirect()->route('events.index');
         default:
@@ -108,12 +95,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/event/create', [PanitiaController::class, 'create'])->name('panitia.event.create');
         Route::post('/event/create', [PanitiaController::class, 'store'])->name('panitia.event.store');
         Route::get('/event/edit/{id}', [PanitiaController::class, 'edit'])->name('panitia.event.edit');
-        Route::put('/event/update/{id}', [PanitiaController::class, 'update'])->name('panitia.event.update');
+        Route::put('/event/edit/{id}', [PanitiaController::class, 'update'])->name('panitia.event.update');
     });
 
-    Route::middleware(['auth', 'rolee:3'])->prefix('panitia')->group(function () {
+    Route::middleware(['auth', 'rolee:3'])->prefix('keuangan')->group(function () {
         Route::get('/registrasi', [FinanceController::class, 'index'])->name('finance.index');
         Route::post('/registrasi/{id}/approve', [FinanceController::class, 'approve'])->name('finance.approve');
+    });
+
+    Route::middleware(['auth', 'rolee:4'])->prefix('member')->group(function () {
+        Route::get('/events/{id}/order', [RegistrationController::class, 'order'])->name('events.order');
+        Route::post('/events/{id}/order', [RegistrationController::class, 'store'])->name('events.store');
     });
 
 
@@ -124,6 +116,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     */
     Route::middleware(['rolee:2,3,4'])->group(function () {
         Route::get('/events', [EventController::class, 'index'])->name('events.index');
+        Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
     });
 });
 

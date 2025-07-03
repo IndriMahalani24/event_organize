@@ -36,7 +36,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="divisi" class="block text-sm font-medium text-slate-700 dark:text-white">Pembicara</label>
+            <label for="speaker" class="block text-sm font-medium text-slate-700 dark:text-white">Pembicara</label>
             <input type="text" name="speaker" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm dark:bg-slate-800 dark:border-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 

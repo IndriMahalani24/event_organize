@@ -6,10 +6,11 @@
 
     @forelse ($events as $event)
         <div class="border p-4 rounded-lg shadow mb-4 bg-white">
+            <img src="{{ asset('posters/' . $event->poster) }}" alt="Poster" class="h-24">
             <h2 class="text-xl font-semibold">{{ $event->name }}</h2>
             <p class="text-sm text-gray-600">{{ $event->event_date }}</p>
             <p class="mt-1">{{ $event->location }}</p>
-            <p class="mt-1 text-gray-700">Pembicara: {{ $event->speaker }}</p>
+            <p class="mt-1 ">Pembicara: {{ $event->speaker }}</p>
             <p class="mt-1">Biaya: Rp{{ number_format($event->registration_fee) }}</p>
             <p class="mt-1 text-sm text-green-600">Status: {{ $event->status }}</p>
 

@@ -49,7 +49,7 @@
   
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home<br></a></li>
+          <li><a href="#hero" class="active">Hame<br></a></li>
           <li><a href="#speakers">Speakers</a></li>
           <li><a href="#schedule">Schedule</a></li>
           <li><a href="#venue">Venue</a></li>
@@ -978,7 +978,7 @@
           <div class="col-lg-2 col-md-3 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><a href="#">Home</a></li>
+              <li><a href="#">Hame</a></li>
               <li><a href="#">About us</a></li>
               <li><a href="#">Services</a></li>
               <li><a href="#">Terms of service</a></li>

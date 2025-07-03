@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-
-
-
-
 class PanitiaController extends Controller
 {
     public function index()
@@ -31,10 +27,8 @@ class PanitiaController extends Controller
 
     public function store(Request $request)
 {
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'poster' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-    ]);
+    // $request->validate([
+    // ]);
 
     $posterName = null;
     if ($request->hasFile('poster')) {
@@ -59,7 +53,7 @@ class PanitiaController extends Controller
         'users_iduser' => auth()->user()->id
     ]);
 
-    return redirect()->route('panitia.event.index')->with('success', 'Event berhasil dibuat');
+    return redirect()->route('landing')->with('success', 'Event berhasil dibuat');
 }
 
 

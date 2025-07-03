@@ -22,6 +22,7 @@ class Event extends Model
         'event_time',
         'registration_fee',
         'max_participants',
+        'speaker',
         'status',
         'poster',
         'users_iduser'
