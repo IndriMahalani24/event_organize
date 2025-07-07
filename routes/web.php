@@ -46,9 +46,9 @@ Route::get('/dashboard', function () {
         case 1:
             return redirect()->route('adminList');
         case 2:
-            return redirect()->route('landing');
+            return redirect()->route('events.index');
         case 3:
-            return redirect()->route('landing');   
+            return redirect()->route('events.index');   
         case 4:
             return redirect()->route('events.index');
         default:
@@ -96,6 +96,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/event/create', [PanitiaController::class, 'store'])->name('panitia.event.store');
         Route::get('/event/edit/{id}', [PanitiaController::class, 'edit'])->name('panitia.event.edit');
         Route::put('/event/edit/{id}', [PanitiaController::class, 'update'])->name('panitia.event.update');
+        Route::delete('/delete/{id}', [PanitiaController::class, 'destroy'])->name('panitia.event.destroy');
     });
 
     Route::middleware(['auth', 'rolee:3'])->prefix('keuangan')->group(function () {

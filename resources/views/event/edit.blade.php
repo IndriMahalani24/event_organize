@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('panitia.event.update', $event['id']) }}" method="POST">
+    <form action="{{ route('panitia.event.update', $event['id']) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -25,7 +25,7 @@
 
         <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
-            <textarea name="description" rows="4" class="w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>{{ $event['description'] }}</textarea>
+            <textarea name="description" rows="4" value="{{ $event['description'] }}" class="w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required></textarea>
         </div>
 
         <div class="mb-4">
@@ -71,13 +71,13 @@
             <input type="file" name="poster" class="form-input" accept="image/*">
             @if ($event['poster'])
                 <p class="text-sm mt-2">Poster sekarang:</p>
-                <img src="{{ asset('posters/' . $event['poster']) }}" alt="Poster" class="h-24">
+                <img src="http://localhost:3000/uploads/{{ $event['poster'] }}" alt="Poster" class="h-24">
             @endif
         </div>
 
         <div class="flex justify-end">
-            <a href="{{ route('panitia.event.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600">Batal</a>
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Update Event</button>
+            <a href="{{ route('landing') }}" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600">Batal</a>
+            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600">Update Event</button>
         </div>
     </form>
 </div>

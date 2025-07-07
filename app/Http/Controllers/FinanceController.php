@@ -9,12 +9,12 @@ class FinanceController extends Controller
 {
     public function index()
     {
-        $registrations = DB::table('registrations')
-            ->join('users', 'registrations.user_id', '=', 'users.id')
-            ->join('event', 'registrations.event_id', '=', 'event.id')
-            ->select('registrations.*', 'users.name as user_name', 'event.name as event_name')
+        $registrations = DB::table('registration')
+            ->join('user', 'registration.user_id', '=', 'user.id')
+            ->join('event', 'registration.event_id', '=', 'event.id')
+            ->select('registration.*', 'user.name as user_name', 'event.name as event_name')
             ->whereNotNull('payment_proof')
-            ->where('registrations.status', 'pending')
+            ->where('registration.status', 'pending')
             ->get();
 
         return view('finance.index', compact('registrations'));
@@ -22,7 +22,7 @@ class FinanceController extends Controller
 
     public function approve($id)
     {
-        DB::table('registrations')->where('id', $id)->update([
+        DB::table('registration')->where('id', $id)->update([
             'status' => 'paid',
         ]);
 

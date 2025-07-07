@@ -6,25 +6,35 @@
                 
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('landing') }}" class="text-lg font-semibold text-gray-700 dark:text-white">
+                    <a href="{{ route('panitia.event.index') }}" class="text-lg font-semibold text-gray-700 dark:text-white">
                         Home
                     </a>
                 </div>
                 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('landing')" :active="request()->routeIs('landing')">
-                        {{ __('Event') }}
-                    </x-nav-link>
-                </div>
-
-                @if(Auth::user()->role_id == 2) 
-                    <div class="hidden space-x-8 sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('panitia.event.create')">
-                            Create Event
+                 @guest
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('landing')" :active="request()->routeIs('landing')">
+                            {{ __('Event') }}
                         </x-nav-link>
                     </div>
-                @endif
+                @endguest
+                @auth
+                    @if(Auth::user()->role_id == 2) 
+                        <div class="hidden space-x-8 sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('panitia.event.create')">
+                                Create Event
+                            </x-nav-link>
+                        </div>
+                    @endif
+                    @if(Auth::user()->role_id == 3) 
+                        <div class="hidden space-x-8 sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('finance.index')">
+                                Pembayaran
+                            </x-nav-link>
+                        </div>
+                    @endif
+                @endauth
             </div>
 
             <!-- Settings Dropdown -->

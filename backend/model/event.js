@@ -11,7 +11,7 @@ class Event {
     }
 
     create(data) {
-        const sql = `INSERT INTO event (name, description, location, max_participants, status, speaker, event_time, event_date, created_at, updated_at, users_iduser) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?)`;
+        const sql = `INSERT INTO event (name, description, location, max_participants, status, speaker, event_time, event_date, registration_fee, poster, created_at, updated_at, users_iduser) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?)`;
         return new Promise((resolve, reject) => {
             db.query(sql, [
                 data.name,
@@ -23,6 +23,7 @@ class Event {
                 data.event_time,
                 data.event_date,
                 data.registration_fee,
+                data.poster,
                 data.users_iduser
             ], (err, result) => {
                 if (err) return reject(err);

@@ -6,7 +6,7 @@
 
     @forelse ($events as $event)
         <div class="border p-4 rounded-lg shadow mb-4 bg-white">
-            <img src="{{ asset('posters/' . $event->poster) }}" alt="Poster" class="h-24">
+            <img src="http://localhost:3000/uploads/{{ $event->poster }}" alt="Poster" class="h-24">
             <h2 class="text-xl font-semibold">{{ $event->name }}</h2>
             <p class="text-sm text-gray-600">{{ $event->event_date }}</p>
             <p class="mt-1">{{ $event->location }}</p>
